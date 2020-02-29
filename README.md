@@ -9,12 +9,12 @@ za phpmyadmin, treba otici u C:\xampp\php\php.ini i izmeniti, iz koda koji je pr
 upload_max_filesize=8M  
 
 
-#setup
+# setup
 -
 Angular - fontend\raider-client>npm install ---> ng serve --open  
 Spring boot - clean and build/build project ---> run
 
-Users
+# users
 -
 role: admin  
 email: admin@adminson.com  
