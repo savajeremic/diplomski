@@ -1,0 +1,13 @@
+table {
+    table-layout: fixed;
+}
+
+.table-dark td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+}
+
+.user-profile {
+    width: 100%;
+}

@@ -1,0 +1,45 @@
+<div #loginModal class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content form">
+      <div class="modal-header-close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-header-login">
+        <h5 class="modal-title" id="loginModalLabel">Sign In</h5>
+      </div>
+      <div class="modal-body">
+        <form class="form-login" [formGroup]="loginForm">
+          <div class="form-group">
+            <input type="text" placeholder="Email" class="form-control" formControlName="email" name="email"
+              [ngClass]="{ 'is-invalid': isSubmitted && formControls.email.errors }">
+            <div *ngIf="isSubmitted && formControls.email.errors" class="invalid-feedback">
+              <div *ngIf="formControls.email.errors.required">Email is required</div>
+              <div *ngIf="formControls.email.errors.minlength">Email must be at least 6 characters</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <input type="password" placeholder="Password" class="form-control" formControlName="password"
+              name="password" [ngClass]="{ 'is-invalid': isSubmitted && formControls.password.errors }">
+            <div *ngIf="isSubmitted && formControls.password.errors" class="invalid-feedback">
+              <div *ngIf="formControls.password.errors.required">Password is required</div>
+              <div *ngIf="formControls.password.errors.minlength">Password needs to be at least 6 characters long</div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="modal-footer">
+        <div class="form-group">
+          <button [disabled]="loading" class="gd-btn menu-btn-reg form-btn" (click)="login()">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Login
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

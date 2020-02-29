@@ -1,0 +1,9 @@
+<div class="media">
+    <img class="mr-3" class="cart-img" src="{{game.coverImage}}" alt="Generic placeholder image" (click)="viewGame(game.id)">
+    <div class="media-body">
+        <h5 class="mt-0 title trunc-name">{{game.name}}</h5>
+        <a class="remove-cart-text" (click)="removeFromCart()">Remove</a>
+        <a class="move-to-wishlist" (click)="moveToWishlist()">Move to wishlist</a>
+    </div>
+    <p class="cart-price">{{game.price == 0 ? 'FREE' : game.price | currency:'EUR'}}</p>
+</div>

@@ -1,0 +1,139 @@
+<div class="header">
+  <h2 style="margin: auto; display: inline-flex;">
+    Games
+    <div *ngIf="isAdmin()">
+      <button *ngIf="isCurrentRoute" class="gd-btn add-btn" (click)="setRoute()"><i
+          class="fas fa-plus fa-2x"></i></button>
+      <button *ngIf="!isCurrentRoute" class="gd-btn add-btn" (click)="setRoute()"><i
+          class="fas fa-minus fa-2x"></i></button>
+    </div>
+  </h2>
+  <app-game-add *ngIf="!isCurrentRoute && isAdmin()" (newGame)="addGame($event)"></app-game-add>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  <app-search [(searchText)]="name" [loading]="loading"></app-search>
+</div>
+<div class="filters">
+  <!-- <div class="filters-item-search">
+    <div class="search-form">
+      <input class="form-control" type="text" name="search" [(ngModel)]="name" (ngModelChange)="name"
+        autocomplete=" off" placeholder="&#61442;  Start searching by name">
+    </div>
+  </div> -->
+  <div class="filters-item">
+    <ng-multiselect-dropdown [placeholder]="'Game Genres'" [data]="genres" [settings]="dropdownSettings"
+      (onSelect)="onGenreSelect($event)" (onDeSelect)="onGenreDeSelect($event)">
+    </ng-multiselect-dropdown>
+  </div>
+  <div class="filters-item">
+    <ng-multiselect-dropdown [placeholder]="'Game Company'" [data]="companies" [settings]="dropdownSettings"
+      (onSelect)="onCompanySelect($event)" (onDeSelect)="onCompanyDeSelect($event)">
+    </ng-multiselect-dropdown>
+
+  </div>
+  <div class="filters-item">
+    <ng-multiselect-dropdown [placeholder]="'Game Language'" [data]="languages" [settings]="dropdownSettings"
+      (onSelect)="onLanguageSelect($event)" (onDeSelect)="onLanguageDeSelect($event)">
+    </ng-multiselect-dropdown>
+  </div>
+  <div class="filters-item filters-item__price">
+    <ng-multiselect-dropdown [placeholder]="'Price'" [data]="prices" [settings]="dropdownSettingsRadio"
+      (onSelect)="onPriceSelect($event)" (onDeSelect)="onPriceDeSelect($event)">
+    </ng-multiselect-dropdown>
+  </div>
+  <div class="filters-item filters-item__sort">
+    <ng-multiselect-dropdown [placeholder]="'Sort by'" [data]="sortByItems" [(ngModel)]="selectedSortItem"
+      [settings]="dropdownSettingsRadio" (onSelect)="onSortByItemSelect($event)"
+      (onDeSelect)="onSortByItemDeSelect($event)">
+    </ng-multiselect-dropdown>
+  </div>
+  <div class="btn-group pull-right">
+    <button class="btn" type="button" (click)="toggleItemsView(1)"
+      [ngClass]="{'btn-primary active': displayMode === 1}">
+      <i class="fa fa-th"></i>
+    </button>
+    <button class="btn" type="button" (click)="toggleItemsView(2)"
+      [ngClass]="{'btn-primary active': displayMode === 2}">
+      <i class="fa fa-list"></i>
+    </button>
+  </div>
+</div>
+<div class="d-flex justify-content-center">
+  <div *ngIf="loading" class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<div class="row" *ngIf="displayMode === 1">
+  <div class="column hovereffect"
+    *ngFor="let game of games | search:name | paginate: { itemsPerPage: 8, currentPage: p }">
+    <app-game-grid-view [game]="game" [loading]="loading" (checkoutGame)="checkout($event)"
+      (addCart)="addToCart($event)" (removeWishlist)="removeFromWishlist($event)" (addWishlist)="addToWishlist($event)">
+    </app-game-grid-view>
+  </div>
+</div>
+
+<div class="user-container" *ngIf="displayMode === 2">
+  <table class="table table-filter">
+    <tbody>
+      <tr *ngFor="let game of games | search:name | paginate: { itemsPerPage: 10, currentPage: p }"
+        class="table-filter__game">
+        <td>
+          <div class="media">
+            <a class="float-left">
+              <img src="{{game.coverImage}}" class="media-photo" (click)="viewGame(game.id)">
+            </a>
+            <div class="media-body">
+              <span class="media-meta float-right">
+                <button [disabled]="loading" class="gd-btn buy-btn"
+                  [ngStyle]="{'margin-right': isAdmin() ? '0.3rem' : ''}"
+                  (click)="game.isInCart == true ? checkout() : addToCart(game)">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                  <i [ngClass]="game.isInCart == true ? 'fas fa-shopping-cart' : 'fas fa-cart-plus'"></i>
+                  {{game.isInCart == true ? ' Checkout' : game.price | currency:'EUR'}}
+                  <!-- + ' &#8364;' -->
+                </button>
+                <button [disabled]="loading" class="btn btn-outline-success edit-btn-outline"
+                  [ngStyle]="{'margin-right': isAdmin() ? '0.3rem' : ''}" (click)="editGame(game.id)" *ngIf="isAdmin()">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button [disabled]="loading" class="btn btn-outline-success delete-btn-outline"
+                  [ngStyle]="{'margin-right': isAdmin() ? '0.3rem' : ''}" (click)="deleteGame(game.id)"
+                  *ngIf="isAdmin()">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </span>
+              <h4 class="title">
+                {{game.name}}
+                <span class="float-right">
+                  <a class="wishlist"
+                    (click)="game.isInWishlist == true ? removeFromWishlist(game) :  addToWishlist(game)"
+                    title="Add to wishlist">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    <i [ngStyle]="{'color': game.isInWishlist ? '#d86a6a' : 'white'}"
+                      [ngClass]="game.isInWishlist == true ? 'fas fa-heart' : 'far fa-heart'" aria-hidden="true"></i>
+                    {{game.isInWishlist == true ? ' Remove from wishlist' : ' Add to wishlist'}}
+                  </a>
+                </span>
+              </h4>
+              <p class="summary mb-0"><span
+                  *ngFor="let genre of game.genres; index as i;">{{ genre.name }}{{game.genres.length-1 === i ? '' : ', '}}</span>
+              </p>
+              <span>
+                <ngb-rating [(rate)]="game.rating" [readonly]="true" max="10">
+                  <ng-template let-fill="fill">
+                    <span class="star" [class.full]="fill === 100" style="font-size: 1.1rem;">
+                      <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                    </span>
+                  </ng-template>
+                </ngb-rating>
+              </span>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>

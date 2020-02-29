@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="row">
+        <div class="checkout-block" [ngStyle]="{'background': games.length == 0 ? '#cccccc' : ''}">
+            <div class="header">
+                <h1 class="header-cart fas fa-shopping-cart">Your Cart</h1>
+                <h2 class="header-cart-h2">Total <span style="font-weight: 600;"
+                        [innerHTML]="getSum() | currency:'EUR'"></span></h2>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div *ngIf="loading" class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <div *ngIf="games.length <= 0" style="text-align: center;">
+                <img src="assets/images/404.jpg">
+            </div>
+            <div class="media media-cart-item" *ngFor="let game of games">
+                <img class="mr-3 image-max" src="{{game.coverImage}}" alt="Generic placeholder image"
+                    (click)="viewGame(game.id)">
+                <div class="media-body mr-3">
+                    <h5 class="mt-0">{{game.name}}</h5>
+                    <p class="text-justify">{{game.description}}</p>
+                    <p class="cart-price">{{game.price == 0 ? 'FREE' : game.price | currency:'EUR'}}</p>
+                    <a class="remove-cart-text" (click)="removeFromCart(game)">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                    <a class="move-cart-text" (click)="cartToWishlist(game)">
+                        <i class="fas fa-shopping-cart"></i> to <i class="far fa-heart"></i>
+                    </a>
+                </div>
+            </div>
+            <button [disabled]="loading" class="gd-btn checkout-btn-menu" (click)="checkout()" *ngIf="games.length > 0">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Checkout
+            </button>
+        </div>
+    </div>
+</div>

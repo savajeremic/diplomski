@@ -1,0 +1,13 @@
+$menu-logo-size: 34px;
+
+.menu-logo {
+    width: $menu-logo-size;
+    height: $menu-logo-size;
+}
+
+.menu-item {
+    float: left;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 52px;
+}

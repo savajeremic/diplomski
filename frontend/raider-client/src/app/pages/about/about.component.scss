@@ -1,0 +1,58 @@
+h1 {
+    background: -webkit-linear-gradient(#e2e2e2, #58626b);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.about-section {
+    display: block;
+    width: 100%;
+    position: relative;
+}
+
+.header-icon {
+    font-size: 0.75rem;
+    position: absolute;
+}
+
+.about-section .about-section-inner {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.about-section .about-header {
+    margin-bottom: 3.75rem;
+    text-align: center;
+    color: #ccc;
+}
+
+.about-section-inner {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 68.75rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+}
+
+.about-section .about-header .about-header-intro {
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 2.125rem;
+    color: #d5e3ea;
+    padding-bottom: 0;
+}
+
+.about-button {
+    background: linear-gradient(to bottom, #486c90 0, #073c6b 95%);
+    font-size: 1rem;
+    font-family: inherit;
+    text-transform: uppercase;
+    width: 22%;
+}
+
+.about-button:hover {
+    background: linear-gradient(to bottom, #5d87b1 0, #0b4f8c 95%);
+}

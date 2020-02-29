@@ -1,0 +1,130 @@
+<div class="container">
+  <div class="checkout-block" *ngIf="game">
+    <div class="container header">
+      <img class="game-image" src="{{game.coverImage}}" alt="Generic placeholder image">
+      <div class="bottom-right">
+        <div class="cart-header__right-sum"><span [innerHTML]="game.price | currency:'EUR'"></span></div>
+      </div>
+    </div>
+    <div *ngIf="!game" style="text-align: center;">
+      <img src="assets/images/404.jpg">
+    </div>
+    <div class="media media-cart-item">
+      <div class="media-body mr-3">
+        <h5 class="mt-0" style="text-align: center;">
+          <div class="header-title">{{game.name}}</div>
+          <div class="game-rating">{{game.rating}} <span style="font-size: 0.7rem; color: #ccc;">/ 10</span></div>
+          <div class="">
+            <ngb-rating [(rate)]="gameGlobalRating" [readonly]="true" max="10">
+              <ng-template let-fill="fill">
+                <span class="star" [class.full]="fill === 100">
+                  <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+                </span>
+              </ng-template>
+            </ngb-rating>
+          </div>
+        </h5>
+
+        <div class="image-profile-left col-6">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <td>Description</td>
+                <td>
+                  <span>{{game.description}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>Rating</td>
+                <td>
+                  <span>{{game.rating}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="second-last">Num. of Votes</td>
+                <td>
+                  <span>{{game.votes}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="image-profile-right col-6">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <td>Genres</td>
+                <td>
+                  <span
+                    *ngFor="let genre of game.genres; index as i;">{{ genre.name }}{{game.genres.length-1 === i ? '' : ', '}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>Companies</td>
+                <td>
+                  <span
+                    *ngFor="let company of game.companies; index as i;">{{ company.name }}{{game.companies.length-1 === i ? '' : ', '}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td>Languages</td>
+                <td>
+                  <span
+                    *ngFor="let language of game.languages; index as i;">{{ language.name }}{{game.languages.length-1 === i ? '' : ', '}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="second-last">Size</td>
+                <td>
+                  <span>{{game.size}} GB</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <h4>User Reviews</h4>
+  <div class="review-btn-add">
+    <button *ngIf="isCurrentRoute" class="gd-btn add-btn" (click)="setRoute()"><i
+        class="fas fa-plus fa-2x"></i></button>
+    <button *ngIf="!isCurrentRoute" class="gd-btn add-btn" (click)="setRoute()"><i
+        class="fas fa-minus fa-2x"></i></button>
+  </div>
+  <app-game-review-add *ngIf="!isCurrentRoute" (review)="submitReview($event)" [game]="game"></app-game-review-add>
+  <div class="d-flex justify-content-center">
+    <div *ngIf="loading" class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div class="review-box" *ngFor="let gameReview of gameReviews | paginate: { itemsPerPage: 5, currentPage: p }">
+    <div class="review-box__profile">
+      <img *ngIf="gameReview.user.avatar" class="review-box__user-avatar" [src]="gameReview.user.avatar">
+      <div *ngIf="gameReview.user.avatar == null || !gameReview.user.avatar" class="review-box__user-avatar">
+        <i class="fas fa-user fa-2x fa-user__profile"></i>
+      </div>
+      <span class="menu-header__username">{{gameReview.user.username}}</span>
+      <span class="menu-header__label">Reviews: {{getUserReviewsCount(gameReview.user.id)}}</span>
+    </div>
+
+    <div class="review-box__comment">
+      <p class="review-title">{{gameReview.title}}</p>
+      <span class="menu-header__label">Reviewed: {{gameReview.reviewDate | date: 'mediumDate'}}</span>
+      <span class="review-rating">
+        <ngb-rating [(rate)]="gameReview.rating" [readonly]="true" max="10">
+          <ng-template let-fill="fill">
+            <span class="star" [class.full]="fill === 100">
+              <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+            </span>
+          </ng-template>
+        </ngb-rating>
+      </span>
+      <p class="review-comment">{{gameReview.comment}}</p>
+    </div>
+  </div>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>

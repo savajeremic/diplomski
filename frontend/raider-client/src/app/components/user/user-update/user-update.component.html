@@ -1,0 +1,46 @@
+<div class="col-md-6 container "  *ngIf="user != null">
+<h2 class="text-center">Update User {{user.username}}</h2>
+    <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">User Name:</label>
+        <input type="text" formControlName="username" placeholder="username" name="username" class="form-control" id="username">
+      </div>
+  
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" formControlName="password" placeholder="password" name="password" class="form-control" id="password">
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="text" formControlName="email" placeholder="Email" name="email" class="form-control" id="email">
+      </div>
+  
+      <div class="form-group">
+        <label for="fullname">Fullname:</label>
+        <input type="text" formControlName="fullname" placeholder="Full name" name="fullname" class="form-control" id="fullname">
+      </div>
+  
+      <div class="form-group">
+        <label for="birthday">Birthday:</label>
+        <input type="text" formControlName="birthday" placeholder="birthday" name="birthday" class="form-control" id="birthday">
+      </div>
+  
+      <div class="form-group">
+        <label for="country">Country:</label>
+        <input type="text" formControlName="country" placeholder="country" name="country" class="form-control" id="country">
+      </div>
+
+      <div class="form-group">
+        <label for="avatar">Avatar:</label>
+        <input type="text" formControlName="avatar" placeholder="avatar" name="avatar" class="form-control" id="avatar">
+      </div>
+
+      <input type="hidden" formControlName="userRole" placeholder="userRole" name="userRole" class="form-control" id="userRole" value="1">
+  
+      <button [disabled]="loading" class="btn btn-success">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+        Add User
+      </button>
+    </form>
+  </div>

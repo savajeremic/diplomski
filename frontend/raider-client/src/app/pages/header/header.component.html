@@ -1,0 +1,164 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark menu">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menuNav" aria-controls="menuNav"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse menu-container" id="menuNav">
+        <a class="navbar-brand logo" routerLink="">RAIDER<img src="../assets/images/logo.png" class="img-responsive logo-img"
+                alt="logo"><strong>GAMES</strong></a>
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown menu-item">
+                <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Store
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" [routerLink]="['']"><i class="fas fa-home"></i> Home</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" [routerLink]="['store']"><i class="fas fa-store"></i> Browse All</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown menu-item">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                    aria-expanded="false">
+                    About
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a [routerLink]="['about']" class="dropdown-item">About us</a>
+                    <div class="dropdown-divider"></div>
+                    <a [routerLink]="['about']" class="dropdown-item">Join Us</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown menu-item">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                    aria-expanded="false">
+                    Support
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a [routerLink]="['contact']" class="dropdown-item">Report Issues</a>
+                    <a [routerLink]="['about']" class="dropdown-item">GameDream</a>
+                    <div class="dropdown-divider"></div>
+                    <a [routerLink]="['about']" class="dropdown-item">Our Department</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown menu-item" *ngIf="!currentUser">
+                <a href="#" style="color: #c6142c;" class="nav-link dropdown-toggle" data-toggle="dropdown"
+                    role="button" aria-haspopup="true" aria-expanded="false">
+                    <span class="glyphicon glyphicon-log-in"></span>
+                    SIGN IN
+                    <span class="caret"></span>
+                </a>
+                <div class="dropdown-menu signin-drop" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item">
+                        <button data-toggle="modal" data-target="#loginModal" class="gd-btn menu-btn-log">Login</button>
+                        <button data-toggle="modal" data-target="#registerModal"
+                            class="gd-btn menu-btn-reg ml-2">Register</button>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <img src="../assets/images/logreggames.png" class="signin-img" alt="logo">
+                    </a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown menu-item" *ngIf="currentUser">
+                <a href="#" id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                    aria-haspopup="true" aria-expanded="false">
+                    <img *ngIf="currentUser.avatar || currentUser.avatar != null" class="menu-link__image" [src]="currentUser.avatar">
+                    <i class="fas fa-user" *ngIf="(currentUser.avatar == null)"></i>
+                    {{currentUser.username}}
+                </a>
+                <div class="dropdown-menu menu-submenu pt-0" aria-labelledby="navbarDropdown">
+                    <!-- home-menu -->
+                    <div class="menu-header menu-account__user">
+                        <img *ngIf="currentUser.avatar || currentUser.avatar != null" class="menu-account__user-avatar" [src]="currentUser.avatar">
+                        <div *ngIf="currentUser.avatar == null || !currentUser.avatar" class="menu-account__user-avatar">
+                            <i class="fas fa-user fa-2x fa-user__profile"></i>
+                        </div>
+                        <span class="menu-header__label">Your account</span>
+                        <span class="menu-header__username">{{currentUser.username}}</span>
+                    </div>
+                    <div class="menu-submenu-item">
+                        <a [routerLink]="['user/profile', currentUser.id]" class="dropdown-item"><i class="fas fa-address-card"></i> Your profile</a>
+                        <a [routerLink]="['user/usergames']" class="dropdown-item"><i class="fas fa-gamepad"></i> Your games<span
+                                class="user-games-count">{{getFlagCount(3)}}</span></a>
+                        <a [routerLink]="['user/wishlist']" class="dropdown-item"><i class="far fa-heart"></i> Your wishlist<span
+                                class="user-games-count">{{getFlagCount(2)}}</span></a>
+                        <a [routerLink]="['user/orders']" class="dropdown-item"><i class="fas fa-receipt"></i> Your orders<span
+                                class="user-games-count">{{orders.length}}</span></a>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div *ngIf="currentUser && isAdmin()">
+                        <a class="dropdown-item" routerLink="admin/game"><i class="fas fa-gamepad"></i> Games</a>
+                        <a class="dropdown-item" routerLink="admin/genre"><i class="fas fa-filter"></i> Genres</a>
+                        <a class="dropdown-item" routerLink="admin/company"><i class="fas fa-building"></i> Companies</a>
+                        <a class="dropdown-item" routerLink="admin/language"><i class="fas fa-language"></i> Languages</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" routerLink="admin/users"><i class="fas fa-users"></i> Users</a>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                    <div class="menu-submenu-item" *ngIf="currentUser"><a class="dropdown-item menu-submenu-link"
+                            routerLink="" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Sign out</a></div>
+                </div>
+            </li>
+
+            <!-- ukoliko korisnik nije ulogovan. -->
+            <li class="nav-item dropdown menu-item menu-tray" *ngIf="!isLoggedIn">
+                <a href="#" id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                    aria-haspopup="true" aria-expanded="false">
+                    <span class="fas fa-shopping-cart"></span>
+                </a>
+
+                <div class="dropdown-menu cart-drop menu-cart-empty" aria-labelledby="navbarDropdown">
+                    <span class="fas fa-shopping-cart"></span>
+                    <p class="menu-cart-empty-header">Your Cart Is Empty</p>
+                    <div class="dropdown-divider"></div>
+                    <div>
+                        <p> Please register or log in in order to buy </p>
+                        <button data-toggle="modal" data-target="#loginModal" class="gd-btn menu-btn-log">Login</button>
+                        <button data-toggle="modal" data-target="#registerModal"
+                            class="gd-btn menu-btn-reg">Register</button>
+                    </div>
+                </div>
+            </li>
+
+            <!-- ukoliko je korisnik ulogovan. -->
+            <li class="nav-item dropdown menu-item menu-tray" *ngIf="isLoggedIn">
+                <a href="#" id="navbarDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                    aria-haspopup="true" aria-expanded="false">
+                    <div [@removeFromCart]="isRemoved ? 'remove' : 'removed'" [@addToCart]="isAdded ? 'add' : 'added'"
+                        class="cart-games-count">{{cartGames.length}}</div>
+                    <span class="fas fa-shopping-cart"></span>
+                </a>
+                <div class="dropdown-menu cart-drop menu-cart-user">
+                    <div class="pre-scrollable">
+                        <div class="cart-header">
+                            <div class="cart-header__right">
+                                <div class="cart-header__right-sum"><span [innerHTML]="getSum() | currency:'EUR'"></span></div>
+                                <button class="gd-btn checkout-btn-menu"
+                                    (click)="cartGames.length > 0 ? checkout() : '' ">
+                                    {{cartGames.length > 0 ? 'Go to checkout' : 'Cart empty' }}
+                                </button>
+                            </div>
+                            <div class="cart-header__left">
+                                <span class="cart-header__left-header"> Your shopping cart </span>
+                                <p class="cart-header__left-length">{{cartGames.length}} items added</p>
+                            </div>
+                        </div>
+                        <div class="media-cart border-top" *ngFor="let game of cartGames; index as i;"
+                            (click)="$event.stopPropagation()">
+                            <app-cart (removeCartGame)="removeFromCart($event)"
+                                (cartToWishlist)="cartToWishlist($event)" [game]="game"></app-cart>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<app-login></app-login>
+<app-register></app-register>

@@ -1,0 +1,56 @@
+.review-box {
+    display: -webkit-inline-box;
+    display: inline-flex;
+    padding: 1rem 1rem;
+    margin-bottom: 0.5rem;
+    box-sizing: border-box;
+    position: relative;
+    box-shadow: 1px 1px 5px 1px #cccccc2b;
+    background: #0000003b;
+    color: #fff;
+    margin-right: 1rem;
+}
+
+.review-box__profile {
+    width: 100%;
+    min-width: 25%;
+    max-width: 25%;
+}
+
+.menu-header__username {
+    display: flex;
+    color: #ffffff;
+}
+
+.menu-header__label {
+    display: flex;
+    color: #cccccc;
+}
+
+.review-box__comment {
+    padding: 0rem 3rem;
+    width: 100%;
+}
+
+.review-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0rem;
+}
+
+.review-comment {
+    margin-top: 0.5rem;
+}
+
+.row {
+    margin: 0rem 6.7rem;
+}
+
+.review-btn-add {
+    text-align: center;
+}
+
+.add-btn {
+    float: right;
+    padding: 0.5rem 5rem;
+}

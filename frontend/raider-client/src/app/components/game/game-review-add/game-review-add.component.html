@@ -1,0 +1,50 @@
+<form class="review-box" [formGroup]="addForm" (ngSubmit)="submitReview()">
+    <div class="review-box__profile">
+        <img *ngIf="user.avatar" class="review-box__user-avatar" [src]="user.avatar">
+        <div *ngIf="user.avatar == null || !user.avatar" class="menu-account__user-avatar">
+            <i class="fas fa-user fa-2x fa-user__profile"></i>
+        </div>
+        <span class="menu-header__username">{{user.username}}</span>
+        <pre style="color: #fff">Rate: <b>{{userRating}}</b></pre>
+        <ngb-rating [(rate)]="userRating" formControlName="userRating"
+            [ngClass]="{ 'is-invalid': isSubmitted && formControls.userRating.errors }">
+            <ng-template let-fill="fill" let-index="index">
+                <span class="star" [class.filled]="fill === 100">&#9733;</span>
+            </ng-template>
+        </ngb-rating>
+        <div *ngIf="isSubmitted && formControls.userRating.errors" class="invalid-feedback">
+            <div *ngIf="formControls.userRating.errors.required || formControls.userRating.errors.min">
+                Game rating is required
+            </div>
+        </div>
+    </div>
+
+    <div class="review-box__comment">
+        <div class="review-title">
+            <label for="title">Title</label>
+            <input class="form-control" id="title" placeholder="Your game review title..." name="title"
+                formControlName="title" [ngClass]="{ 'is-invalid': isSubmitted && formControls.title.errors }">
+            <div *ngIf="isSubmitted && formControls.title.errors" class="invalid-feedback">
+                <div *ngIf="formControls.title.errors.required">TItle of game review is required</div>
+            </div>
+        </div>
+
+        <div class="review-comment">
+            <label for="comment">Your comment</label>
+            <textarea class="form-control" id="comment" rows="10" cols="150" placeholder="Your game review comment..."
+                name="comment" formControlName="comment"
+                [ngClass]="{ 'is-invalid': isSubmitted && formControls.comment.errors }" maxlength="600">
+                    </textarea>
+            <div *ngIf="isSubmitted && formControls.comment.errors" class="invalid-feedback">
+                <div *ngIf="formControls.comment.errors.required">Game review is required</div>
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+            <button [disabled]="loading" class="gd-btn add-btn">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                Submit
+            </button>
+        </div>
+    </div>
+</form>

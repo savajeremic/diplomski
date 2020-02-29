@@ -1,0 +1,18 @@
+<div>
+    <img src="{{game.coverImage}}" default="assets/images/games/0.jpg" class="img-responsive game-store-image">
+</div>
+<div class="overlay">
+    <h2><a [routerLink]="['/store', game.id]">{{game.name}}</a></h2>
+    <button [disabled]="loading" class="btn btn-success" (click)="game.isInCart == true ? checkout() : addToCart(game)">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+        <i [ngClass]="game.isInCart == true ? 'fas fa-shopping-cart' : 'fas fa-cart-plus'"></i>
+        {{game.isInCart == true ? ' Checkout now' : ' Add to cart'}}
+    </button>
+    <a class="wishlist" (click)="game.isInWishlist == true ? removeFromWishlist(game) :  addToWishlist(game)"
+        title="Add to wishlist">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+        <i [ngStyle]="{'color': game.isInWishlist ? '#b13b3b' : 'white'}"
+            [ngClass]="game.isInWishlist == true ? 'fas fa-heart' : 'far fa-heart'" aria-hidden="true"></i>
+        {{game.isInWishlist == true ? ' Remove from wishlist' : ' Add to wishlist'}}
+    </a>
+</div>

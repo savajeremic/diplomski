@@ -1,0 +1,22 @@
+<div class="col-md-6 container add-container">
+    <div class="modal-body"  *ngIf="ifInit">
+        <form class="form-login" [formGroup]="addForm" (ngSubmit)="addLanguage()">
+            <div class="form-group">
+                <input type="text" placeholder="Language name" class="form-control" formControlName="name" name="name"
+                    [ngClass]="{ 'is-invalid': isSubmitted && formControls.name.errors }" value="{{updateLanguage.name}}">
+                <div *ngIf="isSubmitted && formControls.name.errors" class="invalid-feedback">
+                    <div *ngIf="formControls.name.errors.required">Language name is required</div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="form-group">
+                    <button [disabled]="loading" class="btn btn-outline-success add-btn-outline">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Add Language
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

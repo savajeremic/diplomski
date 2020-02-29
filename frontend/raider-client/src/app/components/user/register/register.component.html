@@ -1,0 +1,74 @@
+<div #registerModal class="modal fade" id="registerModal" tabindex="-1" role="dialog"
+    aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content form">
+            <div class="modal-header-close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-header-login">
+                <h5 class="modal-title" id="registerModalLabel">Sign In</h5>
+            </div>
+            <div class="modal-body">
+                <form class="form-login" [formGroup]="registerForm" (ngSubmit)="register()">
+                    <div class="form-group">
+                        <input type="text" placeholder="Email" class="form-control" formControlName="email" name="email"
+                            [ngClass]="{ 'is-invalid': isSubmitted && formControls.email.errors }">
+                        <div *ngIf="isSubmitted && formControls.email.errors" class="invalid-feedback">
+                            <div *ngIf="formControls.email.errors.required">Email is required</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" placeholder="Username" class="form-control" formControlName="username"
+                            name="username" [ngClass]="{ 'is-invalid': isSubmitted && formControls.username.errors }">
+                        <div *ngIf="isSubmitted && formControls.username.errors" class="invalid-feedback">
+                            <div *ngIf="formControls.username.errors.required">Username is required</div>
+                            <div *ngIf="formControls.username.errors.minlength">Username must be at least 6 characters
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" class="form-control" formControlName="password"
+                            name="password" [ngClass]="{ 'is-invalid': isSubmitted && formControls.password.errors }">
+                        <div *ngIf="isSubmitted && formControls.password.errors" class="invalid-feedback">
+                            <div *ngIf="formControls.password.errors.required">Password is required</div>
+                            <div *ngIf="formControls.password.errors.minlength">Password must be at least 6 characters
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" formControlName="confirmPassword" class="form-control"
+                            placeholder="Confirm Password" name="confirmPassword"
+                            [ngClass]="{ 'is-invalid': isSubmitted && formControls.confirmPassword.errors }" />
+                        <div *ngIf="isSubmitted && formControls.confirmPassword.errors" class="invalid-feedback">
+                            <div *ngIf="formControls.confirmPassword.errors.required">Confirm Password is required</div>
+                            <div *ngIf="formControls.confirmPassword.errors.mustMatch">Passwords must match</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-check">
+                        <input type="checkbox" formControlName="acceptTerms" id="acceptTerms" class="form-check-input"
+                            [ngClass]="{ 'is-invalid': isSubmitted && formControls.acceptTerms.errors }" />
+                        <label for="acceptTerms" class="form-check-label">Accept Terms & Conditions</label>
+                        <div *ngIf="isSubmitted && formControls.acceptTerms.errors" class="invalid-feedback">Accept Ts &
+                            Cs
+                            is required
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="form-group">
+                            <button [disabled]="loading" class="btn btn-primary">
+                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                Register
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+.form {
+  max-width: 200%;
+  min-width: 200%;
+  right: 50%;
+}
+
+.input-row {
+  margin-top: 2%;
+  place-content: center;
+  justify-content: center;
+}
+
+input[type="file"] {
+  background: white;
+}
+
+.custom-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.custom-input::before {
+  content: 'Browse';
+  display: inline-block;
+  background: linear-gradient(to top, #f9f9f9, #e3e3e3);
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 0.35rem 0.5rem;
+  outline: none;
+  font-size: 10pt;
+}
+
+.custom-input:hover::before {
+  border-color: black;
+}
+
+.custom-input:active::before {
+  background: -webkit-linear-gradient(to top, #e3e3e3, #f9f9f9);
+}

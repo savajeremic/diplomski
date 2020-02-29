@@ -1,0 +1,114 @@
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-lg-12 col-lg-offset-3" *ngIf="user">
+      <div class="panel p-2">
+        <h3 style="text-align: center; margin: 1rem; text-transform: uppercase;">{{user.username}}'s profile</h3>
+        <div class="image-border" data-toggle="modal" data-target="#avatarModal">
+          <img *ngIf="user.avatar != null" class="img-circle img-responsive profile-image-avatar" [src]="user.avatar">
+          <div *ngIf="user.avatar == null" class="img-circle img-responsive">
+            <i class="fas fa-user fa-2x fa-user__profile"></i>
+          </div>
+        </div>
+        <div class="image-border-tooltip">
+          Click on the image to change it.
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-lg-6" style="margin: 0px auto;">
+            <form [formGroup]="updateForm">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td>Username</td>
+                    <td>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
+                        </div>
+                        <input type="text" formControlName="username" value="{{user.username}}" placeholder="Username"
+                          name="username" class="form-control" id="username"
+                          [ngClass]="{ 'is-invalid': isSubmitted && formControls.username.errors }">
+                        <div *ngIf="isSubmitted && formControls.username.errors" class="invalid-feedback">
+                          <div *ngIf="formControls.username.errors.required">Username is required</div>
+                          <div *ngIf="formControls.username.errors.minlength">Username must be at least 6 characters
+                          </div>
+                        </div>
+                      </div>
+
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Email</td>
+                    <td>
+                      <span tabindex="0" data-toggle="tooltip" title="You can't change your email">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">@</span>
+                          </div>
+                          <input type="text" formControlName="email" value="{{user.email}}" placeholder="Email"
+                            name="email" class="form-control" id="email" style="pointer-events: none;">
+                        </div>
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Birthday</td>
+                    <td>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1"><i class="fas fa-birthday-cake"></i></span>
+                        </div>
+                        <input type="date" formControlName="birthday" value="{{user.birthday}}" placeholder="Birthday"
+                          name="birthday" class="form-control" id="birthday">
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Country</td>
+                    <td>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1"><i class="fas fa-globe"></i></span>
+                        </div>
+                        <input type="text" formControlName="country" value="{{user.country}}" placeholder="Country"
+                          name="country" class="form-control" id="country">
+                      </div>
+
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Full name</td>
+                    <td>
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1"><i class="fas fa-signature"></i></span>
+                        </div>
+                        <input type="text" formControlName="fullname" value="{{user.fullname}}" placeholder="Full name"
+                          name="fullname" class="form-control" id="fullname">
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Change password</td>
+                    <td>
+                      <button data-toggle="modal" data-target="#passwordModal" class="gd-btn btn-password"><i
+                          class="fas fa-key"></i> Password</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="user-profile-footer">
+                <button [disabled]="loading" class="gd-btn btn-save-profile" (click)="updateUser()">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                  Update Profile
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-user-profile (updateAvatar)="user.avatar = $event" [userId]="userId"></app-user-profile>
+<app-user-password></app-user-password>

@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h3>Report problems/bugs. Contact us.</h3>
+            <form name="sentMessage" id="contactForm" (ngSubmit)="send()" novalidate>
+                <div class="control-group form-group">
+                    <div class="controls">
+                        <label>Username</label>
+                        <input type="text" class="form-control" id="name" required
+                            data-validation-required-message="Please enter your name.">
+                    </div>
+                </div>
+                <div class="control-group form-group">
+                    <div class="controls">
+                        <label>Email:</label>
+                        <input type="email" class="form-control" id="email" required
+                            data-validation-required-message="Please enter your email address.">
+                    </div>
+                </div>
+                <div class="control-group form-group">
+                    <div class="controls">
+                        <label>Message:</label>
+                        <textarea rows="10" cols="150" class="form-control" id="message" required
+                            data-validation-required-message="Please enter your message" maxlength="600"
+                            style="resize:none"></textarea>
+                    </div>
+                </div>
+                <div id="success"></div>
+                <button type="submit" class="btn btn-primary" onclick="">Send Message</button>
+            </form>
+        </div>
+    </div>
+</div>

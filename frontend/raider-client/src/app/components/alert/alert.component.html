@@ -1,0 +1,6 @@
+<div *ngIf="message" [ngClass]="message.cssClass" role="alert" [ngStyle]="{'display': isShown ? 'block' : 'none'}">
+<strong>{{title}}</strong> {{message.text}}
+    <button type="button" class="close" aria-label="Close" (click)="isShown = false; ">
+        <span aria-hidden="true"><i class="fas fa-check-circle"></i></span>
+    </button>
+</div>

@@ -1,0 +1,21 @@
+<section class="about-section">
+  <div class="about-section-inner">
+    <header class="about-header">
+      <h1 style="font-size: 2rem;">Raider Games<i class="fa fa-registered header-icon" aria-hidden="true"></i></h1>
+      <p class="about-header-intro">The gaming Client designed for a convenient purchasing, playing and updating games,
+        as well as an online play between gaming platforms,
+        Raider is also built with optionality in mind, and a belief that you should own the games you buy.
+      </p>
+      <hr />
+      <img class="signin-img" src="assets/images/aboutgames.png">
+      <p class="about-header-intro">If you aren't a member of our community, click the register button below.
+      </p>
+      <button *ngIf="!isLoggedIn" class="gd-btn about-button" data-toggle="modal" data-target="#registerModal"> Register
+        now </button>
+      <button *ngIf="isLoggedIn" class="gd-btn about-button"> Welcome! </button>
+      <p class="about-header-intro">If you already are, hey, welcome back!</p>
+      <button *ngIf="!isLoggedIn" data-toggle="modal" data-target="#loginModal"
+        class="gd-btn about-button">Login</button>
+    </header>
+  </div>
+</section>

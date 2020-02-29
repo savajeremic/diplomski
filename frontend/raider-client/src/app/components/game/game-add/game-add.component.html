@@ -1,0 +1,201 @@
+<div class="col-md-6 container add-container">
+    <div class="modal-body" *ngIf="ifInit">
+        <form class="form-login" [formGroup]="addForm" (ngSubmit)="addGame()">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">
+                            <i class="fas fa-gamepad"></i>
+                        </span>
+                    </div>
+                    <input type="text" id="name" placeholder="Name" class="form-control" formControlName="name"
+                        [ngClass]="{ 'is-invalid': isSubmitted && formControls.name.errors }"
+                        value="{{updateGame.name}}" maxlength="30">
+                </div>
+                <div *ngIf="isSubmitted && formControls.name.errors" class="invalid-feedback">
+                    <div *ngIf="formControls.name.errors.required">Name is required</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">
+                            <i class="fas fa-paragraph"></i>
+                        </span>
+                    </div>
+                    <textarea class="form-control" id="description" rows="5" placeholder="Description..."
+                        name="description" formControlName="description" maxlength="500"
+                        [ngClass]="{ 'is-invalid': isSubmitted && formControls.description.errors }"> value="{{updateGame.description}}"
+                </textarea>
+                </div>
+                <div *ngIf="isSubmitted && formControls.description.errors" class="invalid-feedback">
+                    <div *ngIf="formControls.description.errors.required">Description is required</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="gameFilePath" class="game-file-path-label">Cover image:
+                    <input id="gameFilePath" type="file" (change)="handleUpload($event)">
+                </label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">
+                            <i class="fas fa-images"></i>
+                        </span>
+                    </div>
+                    <input [attr.disabled]="true" type="text" id="coverImage" placeholder="Cover Image(assets)"
+                        class="form-control" formControlName="coverImage"
+                        [ngClass]="{ 'is-invalid': isSubmitted && formControls.coverImage.errors }"
+                        value="{{updateGame.coverImage}}" style="pointer-events: none;">
+                </div>
+                <div *ngIf="isSubmitted && formControls.coverImage.errors" class="invalid-feedback">
+                    <div *ngIf="formControls.coverImage.errors.required">Cover Image is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="version">Version: (e.g. 1.0.5)</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">
+                            <i class="fas fa-sort-numeric-up-alt"></i>
+                        </span>
+                    </div>
+                    <input type="text" id="version" placeholder="Version" class="form-control" formControlName="version"
+                        [ngClass]="{ 'is-invalid': isSubmitted && formControls.description.errors }"
+                        value="{{updateGame.version}}">
+                </div>
+                <div *ngIf="isSubmitted && formControls.version.errors" class="invalid-feedback">
+                    <div *ngIf="formControls.version.errors.required">Version is required</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="nareleaseDateme">Release date:</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">
+                            <i class="fas fa-calendar-alt"></i>
+                        </span>
+                    </div>
+                    <input type="date" id="releaseDate" placeholder="ReleaseDate" class="form-control"
+                        formControlName="releaseDate"
+                        [ngClass]="{ 'is-invalid': isSubmitted && formControls.releaseDate.errors }"
+                        value="{{updateGame.releaseDate}}">
+                </div>
+                <div *ngIf="isSubmitted && formControls.releaseDate.errors" class="invalid-feedback">
+                    <div *ngIf="formControls.releaseDate.errors.required">ReleaseDate is required</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="size">Size: (GB)</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">
+                            <i class="fas fa-weight-hanging"></i>
+                        </span>
+                    </div>
+                    <input type="text" id="size" placeholder="Size" class="form-control" formControlName="size"
+                        [ngClass]="{ 'is-invalid': isSubmitted && formControls.size.errors }"
+                        value="{{updateGame.size}}">
+                </div>
+                <div *ngIf="isSubmitted && formControls.size.errors" class="invalid-feedback">
+                    <div *ngIf="formControls.size.errors.required">Size is required</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price: (&#8364;)</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">
+                            <i class="fas fa-money-bill-alt"></i>
+                        </span>
+                    </div>
+                    <input type="text" id="price" placeholder="Price" class="form-control" formControlName="price"
+                        [ngClass]="{ 'is-invalid': isSubmitted && formControls.price.errors }"
+                        value="{{updateGame.price}}">
+                </div>
+                <div *ngIf="isSubmitted && formControls.price.errors" class="invalid-feedback">
+                    <div *ngIf="formControls.price.errors.required">Price is required</div>
+                </div>
+            </div>
+
+            <fieldset disabled>
+                <div class="form-group">
+                    <label for="rating">Rating: (0-10 defined by user review)</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fas fa-star-half-alt"></i>
+                            </span>
+                        </div>
+                        <input type="text" id="rating" placeholder="Rating" class="form-control"
+                            formControlName="rating"
+                            [ngClass]="{ 'is-invalid': isSubmitted && formControls.rating.errors }"
+                            value="{{updateGame.rating}}" style="pointer-events: none;">
+                    </div>
+                    <div *ngIf="isSubmitted && formControls.rating.errors" class="invalid-feedback">
+                        <div *ngIf="formControls.rating.errors.required">Rating is required</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="votes">Votes: (defined by the number user reviews)</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fas fa-poll"></i>
+                            </span>
+                        </div>
+                        <input type="text" id="votes" placeholder="Votes" class="form-control" formControlName="votes"
+                            [ngClass]="{ 'is-invalid': isSubmitted && formControls.votes.errors }"
+                            value="{{updateGame.votes}}" style="pointer-events: none;">
+                    </div>
+                    <div *ngIf="isSubmitted && formControls.votes.errors" class="invalid-feedback">
+                        <div *ngIf="formControls.votes.errors.required">Votes is required</div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="form-group admin-multiselects">
+                <label>Genres:</label>
+                <ng-multiselect-dropdown [placeholder]="'Game Genres'" [data]="genres" [(ngModel)]="selectedGenres"
+                    [ngModelOptions]="{standalone: true}" [settings]="dropdownSettings"
+                    (onSelect)="onGenreSelect($event)" (onSelectAll)="onSelectAllGenres($event)"
+                    (onDeSelect)="onGenreDeSelect($event)" (onDeSelectAll)="onDeSelectAllGenres($event)">
+                </ng-multiselect-dropdown>
+            </div>
+
+            <div class="form-group admin-multiselects">
+                <label>Companies:</label>
+                <ng-multiselect-dropdown [placeholder]="'Game Companies'" [data]="companies"
+                    [(ngModel)]="selectedCompanies" [ngModelOptions]="{standalone: true}" [settings]="dropdownSettings"
+                    (onSelect)="onCompanySelect($event)" (onSelectAll)="onSelectAllCompanies($event)"
+                    (onDeSelect)="onCompanyDeSelect($event)" (onDeSelectAll)="onDeSelectAllCompanies($event)">
+                </ng-multiselect-dropdown>
+            </div>
+
+            <div class="form-group admin-multiselects">
+                <label>Languages:</label>
+                <ng-multiselect-dropdown [placeholder]="'Game Languages'" [data]="languages"
+                    [(ngModel)]="selectedLanguages" [ngModelOptions]="{standalone: true}" [settings]="dropdownSettings"
+                    (onSelect)="onLanguageSelect($event)" (onSelectAll)="onSelectAllLanguages($event)"
+                    (onDeSelect)="onLanguageDeSelect($event)" (onDeSelectAll)="onDeSelectAllLanguages($event)">
+                </ng-multiselect-dropdown>
+            </div>
+
+            <div class="modal-footer">
+                <div class="form-group">
+                    <button [disabled]="loading" class="btn btn-outline-success add-btn-outline">
+                        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                        Add Game
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
