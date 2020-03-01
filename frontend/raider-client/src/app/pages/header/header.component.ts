@@ -168,7 +168,7 @@ export class HeaderComponent implements OnInit {
   }
 
   cartToWishlist(game: Game) {
-    if (this.authService.getUserId() == null) {
+    if (this.authService.getUserId() == 0) {
       return this.alertService.error("You have to be logged in.");
     }
     let gameId = game.id;
@@ -197,7 +197,7 @@ export class HeaderComponent implements OnInit {
   }
 
   addToWishlist(game: Game) {
-    if (this.authService.getUserId() == null) {
+    if (this.authService.getUserId() == 0) {
       return this.alertService.error("You have to be logged in to put games in wishlist.");
     }
     let gameId = game.id;

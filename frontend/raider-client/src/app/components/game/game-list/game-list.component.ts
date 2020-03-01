@@ -178,7 +178,7 @@ export class GameListComponent implements OnInit {
   }
 
   addToCart(game: Game) {
-    if (this.authService.getUserId() == null) {
+    if (this.authService.getUserId() == 0) {
       return this.alertService.error("You have to be logged in to put games in cart.");
     }
     let cartGame: UserGame = new UserGame(this.authService.getUserId(), game.id, 1);
@@ -204,7 +204,7 @@ export class GameListComponent implements OnInit {
 
   addToWishlist(game: Game) {
     this.loading = true;
-    if (this.authService.getUserId() == null) {
+    if (this.authService.getUserId() == 0) {
       return this.alertService.error("You have to be logged in to put games in wishlist.");
     }
     let gameId = game.id;
@@ -231,7 +231,7 @@ export class GameListComponent implements OnInit {
   }
 
   removeFromWishlist(game: Game) {
-    if (this.authService.getUserId() == null) {
+    if (this.authService.getUserId() == 0) {
       return this.alertService.error("You have to be logged in to put games in wishlist.");
     }
     let gameId = game.id;

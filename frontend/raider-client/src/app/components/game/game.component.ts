@@ -46,6 +46,7 @@ export class GameComponent implements OnInit {
       this.getGameReviews(gameId);
     });
     this.initForm();
+    this.loading = false;
   }
 
   private initForm() {
@@ -65,7 +66,7 @@ export class GameComponent implements OnInit {
   get formControls() { return this.addForm.controls; }
 
   addToCart(game: Game) {
-    if (this.authService.getUserId() == null) {
+    if (this.authService.getUserId() == 0) {
       return this.alertService.error("You have to be logged in to put games in cart.");
     }
     let cartGame: UserGame = new UserGame(this.authService.getUserId(), game.id, 1);

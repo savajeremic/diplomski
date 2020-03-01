@@ -53,7 +53,7 @@ export class GameReviewAddComponent implements OnInit {
   submitReview() {
     this.isSubmitted = true;
     this.loading = true;
-    if (this.authService.getUserId() < 1 || this.authService.getUserId() == null) {
+    if (this.authService.getUserId() < 1 || this.authService.getUserId() == 0) {
       this.alertService.error("You need to be logged in for this.");
       this.loading = false;
       return;

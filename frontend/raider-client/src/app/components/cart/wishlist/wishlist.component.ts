@@ -63,7 +63,7 @@ export class WishlistComponent implements OnInit {
   }
 
   wishlistToCart(game: Game) {
-    if (this.authService.getUserId() == null) {
+    if (this.authService.getUserId() == 0) {
       return this.alertService.error("You have to be logged in.");
     }
     this.loading = true;
